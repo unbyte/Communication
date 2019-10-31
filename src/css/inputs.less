@@ -1,0 +1,105 @@
+@plain-color: #ccc;
+@plain-font-color: #888;
+@high-color: #4f90cc;
+
+.trans {
+  transition: all .4s ease;
+}
+
+form {
+  ::-webkit-input-placeholder {
+    color: @plain-color
+  }
+
+
+  p {
+    margin: 32px 0;
+    color: @plain-font-color;
+    font-size: 14px;
+
+    input[type=text], textarea {
+      display: block;
+      width: 560px;
+
+      padding: 12px 8px 4px 8px;;
+
+      font-size: 18px;
+      letter-spacing: 1px;
+      color: @plain-font-color;
+
+      border: none;
+      border-bottom: 1px solid @plain-color;
+      outline: none;
+
+      .trans;
+
+      &:focus {
+        border-bottom: 1px solid @high-color;
+      }
+    }
+
+    textarea {
+      resize: none;
+
+      &::-webkit-scrollbar {
+        width: 2px;
+        height: 1px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: @high-color;
+      }
+    }
+
+    input[type=radio] {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+
+      margin: -2px 5px 1px 20px;
+      vertical-align: middle;
+
+      color: @plain-font-color;
+      -webkit-appearance: none;
+
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      outline: none;
+      cursor: pointer;
+
+      .trans;
+
+      &:checked:before {
+        content: '';
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: @high-color;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+      }
+
+      &:checked {
+        display: inline-block;
+        border: 1px solid @high-color;
+        border-radius: 50%;
+        position: relative;
+      }
+    }
+
+    label {
+      cursor: pointer;
+
+      &.focus {
+        color: @high-color;
+      }
+    }
+
+    &#methods {
+      text-align: center;
+    }
+  }
+}
