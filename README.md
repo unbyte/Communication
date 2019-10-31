@@ -13,3 +13,11 @@
 npm i
 npm run serve
 ```
+
+实现了G.711 a的编解码
+```shell script
+# 编码 e or encode
+node g711a e yoursignal
+# 解码 d or decode
+node g711a d yourcode
+```

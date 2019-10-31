@@ -20,11 +20,11 @@ export function strToBin(text) {
     return bin;
 }
 
+// 每碰到一次±1，加一次，当碰到四个0时查看奇偶并清零
+// 每碰到一次0，加一次，当碰到1或者四个0时清零，前面偶数个1则B00V，奇数个000V
+// 第一个无论如何为
 export function encodeHDB3(bin) {
     let ami = encodeAMI(bin);
-    // 每碰到一次±1，加一次，当碰到四个0时查看奇偶并清零
-    // 每碰到一次0，加一次，当碰到1或者四个0时清零，前面偶数个1则B00V，奇数个000V
-    // 第一个无论如何为
     for (let i = 0, flagOne = 0, flagZero = 0, flagFirst = true; i < ami.length; i++) {
         if (ami[i] === 0) flagZero++;
         else {
@@ -45,9 +45,9 @@ export function encodeHDB3(bin) {
     return ami.join(',');
 }
 
+// 1在中间跃变，0不变，0的前面也是0时，边缘跃变
 export function encodeMiller(bin) {
     if (!bin) return '';
-    // 1在中间跃变，0不变，0的前面也是0时，边缘跃变
     let res = [], content = binTextToArray(bin);
 
     res.push(...(!content[0] ? [-1, -1] : [-1, 1]));
@@ -57,8 +57,7 @@ export function encodeMiller(bin) {
             preStatus = -preStatus;
             preContent = 1;
         } else {
-            if (!content[i - 1])
-                preStatus = -preStatus;
+            preStatus = content[i - 1] ? preStatus : -preStatus;
             res.push(preStatus, preStatus);
             preContent = 0;
         }
@@ -67,9 +66,9 @@ export function encodeMiller(bin) {
     return res.join(',');
 }
 
+// 1交替用1 1和0 0表示；0用0 1表示
 export function encodeCMI(bin) {
     if (!bin) return '';
-    // 1交替用1 1和0 0表示；0用0 1表示
     let res = [], content = binTextToArray(bin);
     for (let i = 0, flagOne = true; i < content.length; ++i)
         if (content[i]) {
@@ -82,9 +81,9 @@ export function encodeCMI(bin) {
 
 const DMCodeMap = [[-1, 1], [1, -1]];
 
+// 遇到0就保持前一个bit的波形，1就反一下，第一个前面是高位
 export function encodeDM(bin) {
     if (!bin) return '';
-    // 遇到0就保持前一个bit的波形，1就反一下，第一个前面是高位
     let res = [], content = binTextToArray(bin);
 
     res.push(...DMCodeMap[1 - content[0]]);
